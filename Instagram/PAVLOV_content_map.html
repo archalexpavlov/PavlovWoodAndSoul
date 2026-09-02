@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PAVLOV — карта контента</title>
+
+<style>
+  :root{
+    --ground:#f4f2ef; --surface:#ffffff; --surface-2:#ebe7e1; --line:#dcd6cd; --line-2:#c2b8ab;
+    --text:#1a1714; --text-2:#5a5249; --text-3:#8a8175;
+    --found:#2a2a2a; --reach:#b3541e; --trust:#17798f; --conv:#6a4b8c; --keep:#8a6a1f;
+    --mono:ui-monospace,"SF Mono","Cascadia Mono",Consolas,monospace;
+    --sans:ui-sans-serif,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  :root[data-theme="dark"]{
+    --ground:#12100e; --surface:#1c1916; --surface-2:#252119; --line:#332d25; --line-2:#4a4136;
+    --text:#ece7e0; --text-2:#b0a698; --text-3:#7f766a;
+    --found:#d8d2c8; --reach:#e8834a; --trust:#57bcd2; --conv:#b193d6; --keep:#d9a34e;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--text);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .page{display:flex;flex-direction:column;height:100vh;min-height:560px}
+  header.bar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:12px 20px;border-bottom:1px solid var(--line)}
+  .bar h1{font-size:15px;font-weight:640;letter-spacing:.02em;margin:0}
+  .bar h1 span{color:var(--text-3);font-weight:400}
+  .bar .sc{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto}
+  button.tool,select.tool{font-family:var(--mono);font-size:11px;padding:5px 9px;border:1px solid var(--line-2);
+    background:var(--surface);color:var(--text-2);border-radius:2px;cursor:pointer}
+  button.tool:hover,select.tool:hover{border-color:var(--reach);color:var(--reach)}
+  button.tool.on{border-color:var(--reach);color:var(--reach)}
+
+  .body{display:flex;flex:1;min-height:0}
+  .viewport{position:relative;flex:1;overflow:hidden;cursor:grab;
+    background:radial-gradient(circle at 1px 1px,var(--line) 1px,transparent 0) 0 0/26px 26px}
+  .viewport.grabbing{cursor:grabbing}
+  .canvas{position:absolute;top:0;left:0;width:1500px;transform-origin:0 0}
+  .canvas svg{position:absolute;inset:0;width:1500px;height:1100px;pointer-events:none;overflow:visible}
+
+  .frame{position:absolute;border:1px dashed var(--line-2);border-radius:7px;pointer-events:none}
+  .frame>span{position:absolute;top:-10px;left:14px;padding:0 8px;background:var(--ground);
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+  .frame.found{border-color:var(--found)} .frame.found>span{color:var(--found)}
+  .frame.reach{border-color:var(--reach)} .frame.reach>span{color:var(--reach)}
+  .frame.trust{border-color:var(--trust)} .frame.trust>span{color:var(--trust)}
+  .frame.conv{border-color:var(--conv)}  .frame.conv>span{color:var(--conv)}
+  .frame.keep{border-color:var(--keep)}  .frame.keep>span{color:var(--keep)}
+
+  .node{position:absolute;width:200px;background:var(--surface);border:1px solid var(--line-2);
+    border-radius:5px;padding:9px 11px;cursor:pointer;transition:border-color .12s,box-shadow .12s}
+  .node:hover{border-color:var(--text-3);box-shadow:0 2px 10px rgba(0,0,0,.07)}
+  .node.sel{box-shadow:0 0 0 2px var(--reach)}
+  .node.dim{opacity:.28}
+  .node .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:3px}
+  .node.found .tag{color:var(--found)} .node.reach .tag{color:var(--reach)}
+  .node.trust .tag{color:var(--trust)} .node.conv .tag{color:var(--conv)} .node.keep .tag{color:var(--keep)}
+  .node h3{margin:0 0 3px;font-size:13.5px;font-weight:640;letter-spacing:-.01em}
+  .node p{margin:0;font-size:11.5px;color:var(--text-2);line-height:1.42}
+
+  aside{width:370px;flex:none;border-left:1px solid var(--line);background:var(--surface);
+    overflow-y:auto;padding:18px 20px 40px}
+  aside.hide{display:none}
+  aside .close{float:right;font-family:var(--mono);font-size:11px;color:var(--text-3);cursor:pointer;border:0;background:0}
+  aside .tag{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase}
+  aside h2{margin:4px 0 6px;font-size:19px;letter-spacing:-.015em}
+  aside .lead{font-size:13px;color:var(--text-2);margin:0 0 16px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+  aside dl{margin:0}
+  aside dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--text-3);margin:15px 0 4px}
+  aside dd{margin:0;font-size:13px;color:var(--text);line-height:1.55}
+  aside .ph{background:var(--surface-2);border-left:2px solid var(--line-2);padding:7px 10px;
+    margin:7px 0;font-size:12.5px;font-family:var(--mono);line-height:1.45}
+  aside .warn{color:var(--reach)}
+  .empty{color:var(--text-3);font-size:13px;padding-top:40px;text-align:center}
+  .legend{display:flex;flex-wrap:wrap;gap:12px;padding:8px 20px;border-top:1px solid var(--line);
+    font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--text-3)}
+  .legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+</style>
+
+<div class="page">
+  <header class="bar">
+    <h1>PAVLOV <span>— карта контента</span></h1>
+    <div class="sc">
+      <select class="tool" id="scen">
+        <option value="">маршрут: не выбран</option>
+        <option value="client">путь клиента</option>
+        <option value="stage1">этап 1 — база</option>
+        <option value="stage2">этап 2 — запуск</option>
+        <option value="stage3">этап 3 — поток</option>
+      </select>
+      <button class="tool" id="fit">по размеру</button>
+      <button class="tool" id="theme">тема</button>
+    </div>
+  </header>
+  <div class="body">
+    <div class="viewport" id="vp"><div class="canvas" id="canvas"><svg id="wires"></svg></div></div>
+    <aside id="aside" class="hide"></aside>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--found)"></i>фундамент</span>
+    <span><i style="background:var(--reach)"></i>привлечение</span>
+    <span><i style="background:var(--trust)"></i>доверие</span>
+    <span><i style="background:var(--conv)"></i>конверсия</span>
+    <span><i style="background:var(--keep)"></i>удержание</span>
+  </div>
+</div>
+
+<script>
+const GROUPS=[
+ {id:'found',t:'фундамент — что говорим и почему'},
+ {id:'reach',t:'привлечение — единственный вход для незнакомых'},
+ {id:'trust',t:'доверие — витрина, куда приходят проверять'},
+ {id:'conv', t:'конверсия — снятие последних вопросов'},
+ {id:'keep', t:'удержание — пока человек решает месяцами'},
+];
+
+const N=[
+ {id:'core',g:'found',x:40,y:60,t:'Ядро',d:'Строю то, чего сам не смог купить',
+  k:[['Позиция','Один человек берёт идею целиком — от картинки до готового места.'],
+     ['Почему пусто на рынке','Производители живут на объёме, уникальное ломает их экономику. Студии продают проект и заканчивают. Столяры живут на лестницах.'],
+     ['Нельзя скопировать','Конкурент повторит стиль, цены, конструктив. Но не скажет, что делал для своих детей, если не делал.'],
+     ['Не говорить','unikalny · wyjątkowy · tylko ja · menedżer · luxury · premium · tanio']]},
+
+ {id:'psy',g:'found',x:270,y:60,t:'Три механизма',d:'Как работает восприятие',
+  k:[['Процесс сильнее результата','Готовый объект вызывает восхищение и пролистывание. Незаконченный — желание досмотреть. Мозг не терпит открытых петель.'],
+     ['Обоснование важнее утверждения','Не «делаю качественно», а «вот почему у всех остальных сгнивает». Решение принимают, когда понимают механику.'],
+     ['Уязвимость > компетентность','Ошибка и переделка покупают доверие быстрее. Человеку ошибаться можно, фирме нельзя. Но только в сторис.']]},
+
+ {id:'one',g:'found',x:500,y:60,t:'Одна история — три оформления',d:'Не три темы, а три поворота',
+  k:[['Reels','Момент удивления. Разрыв между картинкой и реальностью.'],
+     ['Сторис','Приглашение к разговору. Здесь можно быть неуверенным вслух.'],
+     ['Пост','Только когда построено. Пост — доказательство, а не намерение.'],
+     ['Работа','Не в поиске тем, а в выборе, какой поворот дать.']]},
+
+ {id:'reels',g:'reach',x:40,y:250,t:'Reels',d:'Охват до 30% аудитории — вдвое больше остальных форматов',
+  k:[['Цель','Попасть к тем, кто о тебе не знает. Единственный холодный вход.'],
+     ['Аудитория','Палец уже в движении. Задача первых 2 секунд — остановить, не заинтриговать.'],
+     ['Форматы','Превращение (пустой участок → объект) · Зажигание света · Разбор картинки с Pinterest · Сравнение двух объектов и разницы в цене · Деталь крупно'],
+     ['Техника','9:16 · текст на экране обязателен, 85% смотрят без звука · не ставить текст в нижние 20%, там интерфейс'],
+     ['Метрика','Охват и досмотры. Не лайки от знакомых.'],
+     ['Не делать','Объяснять, кто ты. Холодный зритель не досмотрит до объяснений.']]},
+
+ {id:'geo',g:'reach',x:270,y:250,t:'География',d:'Дыра, которую не закрыть полностью',
+  k:[['Проблема','Reels раздаются по всей стране. Большая часть охвата уйдёт в Гданьск и Вроцлав, куда ты не построишь.'],
+     ['Частично лечится','Геометки · упоминание Малопольски · узнаваемые окрестности в кадре'],
+     ['Частично принимается','Доставка до 150 км покрывает Краков, Тарнув, Жешув, часть Силезии.'],
+     ['Вывод','Твои 10 тысяч просмотров стоят меньше, чем у мастера с доставкой по всей стране. Учитывать при оценке результата.']]},
+
+ {id:'post',g:'trust',x:40,y:470,t:'Посты',d:'Витрина. Решение за 3 секунды: профессионал или самодельщик',
+  k:[['Цель','Человек пришёл из reels и проверяет. Посты работают не в ленте, а в профиле.'],
+     ['Всегда несколько фото','Карусель — тот же пост, просто листается вбок. Одиночное фото делать незачем: несколько кадров дают выше вовлечённость и больше сохранений.'],
+     ['Почему сохранения важны','Покупатель решает месяцами — он сохраняет и возвращается. Reels со 100k просмотров и 50 комментариями конвертирует хуже карусели с 5k и 200 вовлечёнными.'],
+     ['В несколько кадров помещается мысль','Одно фото говорит «красивый домик». Шесть — объясняют цену.'],
+     ['Что ложится идеально','Шесть подрядчиков — по слайду на каждого · Два домика и разница в цене · Дерево: сырое / сушёное / клеёное · До-после · Что входит в комплект'],
+     ['Ритм сетки','Общий план → деталь → люди → общий. Не два похожих кадра подряд.'],
+     ['Хронология','Переставить нельзя, новое встаёт слева вверху. При запуске сильнейший кадр публикуется ПОСЛЕДНИМ.'],
+     ['Важно','Пост доходит не до всех подписчиков — лента строится по прошлым взаимодействиям, а не по времени.'],
+     ['Метрика','Сохранения и переход в директ. Не лайки.']]},
+
+ {id:'pin3',g:'trust',x:270,y:470,t:'3 закреплённых',d:'Единственная постоянная часть профиля',
+  k:[['Слот 1','Лучший визуал — ночная терраса'],
+     ['Слот 2','Знакомство — кто ты, почему это делаешь'],
+     ['Слот 3','Цены и что входит'],
+     ['Смысл','Всё остальное в сетке съезжает вниз с каждым новым постом. Эти три — нет.']]},
+
+ {id:'high',g:'conv',x:40,y:690,t:'Кружочки',d:'Навигация по конверсии, не тип контента',
+  k:[['Altany · Domki','Что делаешь'],
+     ['Proces','Как это происходит. Снимает страх неизвестности.'],
+     ['Cennik','Порог. Отсекает нецелевых до первого сообщения — тогда неловкий момент «столько не выйдет» не наступает.'],
+     ['O mnie','Ядро позиционирования. Здесь есть место объяснить экономику отказа целиком.'],
+     ['Наполнение','Только из сторис. Отдельно не снимаются.']]},
+
+ {id:'dm',g:'conv',x:270,y:690,t:'Директ',d:'Ссылка в био ≈ 0,5%. Разговор из комментария — 5–8%',
+  k:[['Разница','В десять-шестнадцать раз. Комментарий → личка — самый сильный рычаг.'],
+     ['Прямая калька не годится','«Напиши КОШТОРЫС и получи гайд» — язык инфобизнеса, убьёт премиальный тон.'],
+     ['Рабочая адаптация','Карусель про шесть подрядчиков кончается вопросом: «Ile z tych sześciu masz już znalezionych?» Человек отвечает, ты отвечаешь в личку. Разговор начался, никто не сказал «купи».'],
+     ['Сильнее любого лид-магнита','Концепция за 1000 zł. Платное микрообязательство отсеивает собирателей идей и превращает интерес в сделку с первого шага.']]},
+
+ {id:'stor',g:'keep',x:40,y:880,t:'Сторис',d:'Инструмент для маленькой аудитории, не для большой',
+  k:[['Двойная цель','Удерживать тех, кто подписан. И производить материал для кружочков — всё удачное уходит туда.'],
+     ['Ошибка планирования','Откладывать до тысячи подписчиков. При тысяче можно пропускать, при пятидесяти — нельзя, каждый на счету.'],
+     ['Механика','Кружочек сверху заметнее поста в ленте. Каждое открытие говорит алгоритму: показывать этому человеку.'],
+     ['Что уместно только здесь','Ошибки, переделки, «не получилось с первого раза». В сетке читается как непрофессионализм, здесь — как честность.'],
+     ['Метрика','Ответы на сторис. Каждый ответ — открытый директ, то есть готовый разговор.']]},
+
+ {id:'cad',g:'keep',x:270,y:880,t:'Частота',d:'Реалистичный минимум для одного человека',
+  k:[['Практика рекомендует','3–5 reels в неделю, 2–3 карусели, 5–10 сторис в день. Для того, кто ещё и строит объекты, невыполнимо.'],
+     ['Реалистично','2 reels в неделю · 1 карусель в неделю · сторис через день'],
+     ['Ключевое','Не количество, а отсутствие провалов. Три поста в неделю два месяца подряд работают лучше, чем десять за неделю и тишина три следующие.']]},
+
+ {id:'metr',g:'keep',x:500,y:880,t:'За чем следить',d:'Не подписчики и не лайки',
+  k:[['Главное','Сохранения и переходы в директ.'],
+     ['Почему','Подписчик, который лайкнул и забыл — ноль. Тот, кто сохранил карусель про подрядчиков, вернётся к ней сам через месяц.'],
+     ['Горизонт','20 тысяч не тратят за неделю. Решение зреет месяцами — метрика должна это учитывать.']]},
+];
+
+const E=[
+ ['core','psy'],['psy','one'],
+ ['one','reels'],['one','post'],['one','stor'],
+ ['reels','geo'],['reels','post'],
+ ['post','pin3'],['post','dm'],
+ ['post','high'],['high','dm'],
+ ['stor','high'],['stor','cad'],['cad','metr'],
+ ['core','high'],
+];
+
+const ROUTES={
+ client:['reels','post','high','dm','stor'],
+ stage1:['post','pin3','high'],
+ stage2:['reels','stor','geo','dm'],
+ stage3:['reels','post','stor','cad','metr','dm'],
+};
+
+const cv=document.getElementById('canvas'), svg=document.getElementById('wires'),
+      vp=document.getElementById('vp'), aside=document.getElementById('aside');
+const NW=200;
+
+// группы
+const bounds={};
+N.forEach(n=>{const b=bounds[n.g]||(bounds[n.g]={x1:1e9,y1:1e9,x2:-1e9,y2:-1e9});
+  b.x1=Math.min(b.x1,n.x); b.y1=Math.min(b.y1,n.y);
+  b.x2=Math.max(b.x2,n.x+NW); b.y2=Math.max(b.y2,n.y+90);});
+GROUPS.forEach(g=>{const b=bounds[g.id]; if(!b)return;
+  const f=document.createElement('div'); f.className='frame '+g.id;
+  f.style.left=(b.x1-18)+'px'; f.style.top=(b.y1-26)+'px';
+  f.style.width=(b.x2-b.x1+36)+'px'; f.style.height=(b.y2-b.y1+44)+'px';
+  f.innerHTML='<span>'+g.t+'</span>'; cv.appendChild(f);});
+
+// узлы
+const els={};
+N.forEach(n=>{const d=document.createElement('div');
+  d.className='node '+n.g; d.style.left=n.x+'px'; d.style.top=n.y+'px';
+  d.innerHTML='<div class="tag">'+n.g+'</div><h3>'+n.t+'</h3><p>'+n.d+'</p>';
+  d.onclick=e=>{e.stopPropagation(); open(n.id);};
+  cv.appendChild(d); els[n.id]=d;});
+
+// связи
+function wires(){svg.innerHTML='';
+  E.forEach(([a,b])=>{const A=els[a].getBoundingClientRect(), B=els[b].getBoundingClientRect();
+    const na=N.find(x=>x.id===a), nb=N.find(x=>x.id===b);
+    const ha=els[a].offsetHeight, hb=els[b].offsetHeight;
+    let x1,y1,x2,y2;
+    if(Math.abs(na.y-nb.y)<40){x1=na.x+NW;y1=na.y+ha/2;x2=nb.x;y2=nb.y+hb/2;}
+    else{x1=na.x+NW/2;y1=na.y+ha;x2=nb.x+NW/2;y2=nb.y;}
+    const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    const dx=Math.abs(x2-x1)*.4, dy=Math.abs(y2-y1)*.4;
+    const c=(Math.abs(na.y-nb.y)<40)
+      ? `M${x1},${y1} C${x1+dx},${y1} ${x2-dx},${y2} ${x2},${y2}`
+      : `M${x1},${y1} C${x1},${y1+dy} ${x2},${y2-dy} ${x2},${y2}`;
+    p.setAttribute('d',c); p.setAttribute('fill','none');
+    p.setAttribute('stroke','var(--line-2)'); p.setAttribute('stroke-width','1.2');
+    p.dataset.a=a; p.dataset.b=b; svg.appendChild(p);});}
+setTimeout(wires,30);
+
+// панель
+function open(id){const n=N.find(x=>x.id===id);
+  Object.values(els).forEach(e=>e.classList.remove('sel'));
+  els[id].classList.add('sel'); aside.classList.remove('hide');
+  aside.innerHTML='<button class="close" onclick="document.getElementById(\'aside\').classList.add(\'hide\')">закрыть ✕</button>'
+    +'<div class="tag" style="color:var(--'+n.g+')">'+n.g+'</div>'
+    +'<h2>'+n.t+'</h2><p class="lead">'+n.d+'</p><dl>'
+    +n.k.map(([t,v])=>'<dt>'+t+'</dt><dd>'+v+'</dd>').join('')+'</dl>';}
+vp.onclick=()=>{Object.values(els).forEach(e=>e.classList.remove('sel'));};
+
+// маршруты
+document.getElementById('scen').onchange=e=>{const r=ROUTES[e.target.value];
+  Object.entries(els).forEach(([id,el])=>el.classList.toggle('dim', r? !r.includes(id):false));
+  svg.querySelectorAll('path').forEach(p=>{
+    const on=r? (r.includes(p.dataset.a)&&r.includes(p.dataset.b)):false;
+    p.setAttribute('stroke', r? (on?'var(--reach)':'var(--line)') : 'var(--line-2)');
+    p.setAttribute('stroke-width', on?'2':'1.2');});};
+
+// пан-зум
+let sc=1,ox=0,oy=0,drag=false,px,py;
+function apply(){cv.style.transform=`translate(${ox}px,${oy}px) scale(${sc})`;}
+vp.addEventListener('mousedown',e=>{drag=true;px=e.clientX;py=e.clientY;vp.classList.add('grabbing');});
+addEventListener('mousemove',e=>{if(!drag)return;ox+=e.clientX-px;oy+=e.clientY-py;px=e.clientX;py=e.clientY;apply();});
+addEventListener('mouseup',()=>{drag=false;vp.classList.remove('grabbing');});
+vp.addEventListener('wheel',e=>{e.preventDefault();const k=e.deltaY<0?1.1:.9;
+  const r=vp.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
+  ox=mx-(mx-ox)*k; oy=my-(my-oy)*k; sc=Math.min(2.2,Math.max(.3,sc*k)); apply();},{passive:false});
+function fit(){const r=vp.getBoundingClientRect();
+  sc=Math.min((r.width-40)/1060,(r.height-40)/1010,1); ox=20; oy=20; apply();}
+document.getElementById('fit').onclick=fit;
+document.getElementById('theme').onclick=()=>{
+  const d=document.documentElement;
+  d.dataset.theme = d.dataset.theme==='dark'?'light':'dark';};
+addEventListener('load',fit); fit();
+</script>
+</html>
