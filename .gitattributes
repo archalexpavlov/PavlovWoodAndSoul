@@ -13,6 +13,7 @@
 *.svg           text eol=lf
 *.py            text eol=lf
 .gitattributes  text eol=lf
+.gitmodules     text eol=lf
 
 # ---------- Excel: НЕ в LFS ----------
 # Файл маленький и меняется часто. В обычном git к нему

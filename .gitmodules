@@ -1,0 +1,3 @@
+[submodule "Site"]
+	path = Site
+	url = git@github.com:archalexpavlov/PavlovSite.git
