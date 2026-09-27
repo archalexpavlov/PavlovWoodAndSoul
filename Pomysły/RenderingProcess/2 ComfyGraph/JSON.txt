@@ -1,0 +1,1586 @@
+{
+ "id": "dca0ec99-cc7a-49bd-8381-6be202a5d898",
+ "revision": 0,
+ "last_node_id": 32,
+ "last_link_id": 35,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "LoadImage",
+   "pos": [
+    0,
+    40
+   ],
+   "size": [
+    340,
+    420
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      1
+     ],
+     "slot_index": 0
+    },
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": null
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadImage",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "render.png",
+    "image"
+   ],
+   "title": "Рендер (геометрия) — image 1"
+  },
+  {
+   "id": 2,
+   "type": "LoadImage",
+   "pos": [
+    0,
+    560
+   ],
+   "size": [
+    340,
+    420
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 4,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      5
+     ],
+     "slot_index": 0
+    },
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": null
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadImage",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "style_reference.png",
+    "image"
+   ],
+   "title": "Референс материалов / света — image 2 (опц.)"
+  },
+  {
+   "id": 3,
+   "type": "UNETLoader",
+   "pos": [
+    420,
+    1060
+   ],
+   "size": [
+    340,
+    82
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      22
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UNETLoader",
+    "cnr_id": "comfy-core",
+    "models": [
+     {
+      "name": "flux-2-klein-4b-fp8.safetensors",
+      "url": "https://huggingface.co/black-forest-labs/FLUX.2-klein-4b-fp8/resolve/main/flux-2-klein-4b-fp8.safetensors",
+      "directory": "diffusion_models"
+     }
+    ]
+   },
+   "widgets_values": [
+    "flux-2-klein-4b-fp8.safetensors",
+    "default"
+   ]
+  },
+  {
+   "id": 4,
+   "type": "CLIPLoader",
+   "pos": [
+    420,
+    1180
+   ],
+   "size": [
+    340,
+    106
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      8
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPLoader",
+    "cnr_id": "comfy-core",
+    "models": [
+     {
+      "name": "qwen_3_4b.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/text_encoders/qwen_3_4b.safetensors",
+      "directory": "text_encoders"
+     }
+    ]
+   },
+   "widgets_values": [
+    "qwen_3_4b.safetensors",
+    "flux2",
+    "default"
+   ]
+  },
+  {
+   "id": 5,
+   "type": "VAELoader",
+   "pos": [
+    420,
+    1320
+   ],
+   "size": [
+    340,
+    58
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      4,
+      7,
+      31
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAELoader",
+    "cnr_id": "comfy-core",
+    "models": [
+     {
+      "name": "flux2-vae.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/vae/flux2-vae.safetensors",
+      "directory": "vae"
+     }
+    ]
+   },
+   "widgets_values": [
+    "flux2-vae.safetensors"
+   ]
+  },
+  {
+   "id": 6,
+   "type": "ImageScaleToTotalPixels",
+   "pos": [
+    420,
+    40
+   ],
+   "size": [
+    300,
+    106
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      2,
+      3
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageScaleToTotalPixels",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "lanczos",
+    1.0,
+    16
+   ],
+   "title": "Рабочее разрешение (мегапиксели)"
+  },
+  {
+   "id": 7,
+   "type": "GetImageSize",
+   "pos": [
+    420,
+    200
+   ],
+   "size": [
+    220,
+    86
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 2
+    }
+   ],
+   "outputs": [
+    {
+     "name": "width",
+     "type": "INT",
+     "links": [
+      18,
+      20
+     ],
+     "slot_index": 0
+    },
+    {
+     "name": "height",
+     "type": "INT",
+     "links": [
+      19,
+      21
+     ],
+     "slot_index": 1
+    },
+    {
+     "name": "batch_size",
+     "type": "INT",
+     "links": null
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "GetImageSize",
+    "cnr_id": "comfy-core"
+   }
+  },
+  {
+   "id": 8,
+   "type": "VAEEncode",
+   "pos": [
+    420,
+    330
+   ],
+   "size": [
+    220,
+    46
+   ],
+   "flags": {},
+   "order": 7,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "pixels",
+     "type": "IMAGE",
+     "link": 3
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 4
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      11,
+      13
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEEncode",
+    "cnr_id": "comfy-core"
+   }
+  },
+  {
+   "id": 9,
+   "type": "ImageScaleToTotalPixels",
+   "pos": [
+    420,
+    560
+   ],
+   "size": [
+    300,
+    106
+   ],
+   "flags": {},
+   "order": 8,
+   "mode": 4,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 5
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      6
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageScaleToTotalPixels",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "lanczos",
+    1.0,
+    16
+   ]
+  },
+  {
+   "id": 10,
+   "type": "VAEEncode",
+   "pos": [
+    420,
+    720
+   ],
+   "size": [
+    220,
+    46
+   ],
+   "flags": {},
+   "order": 9,
+   "mode": 4,
+   "inputs": [
+    {
+     "name": "pixels",
+     "type": "IMAGE",
+     "link": 6
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 7
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      15,
+      17
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEEncode",
+    "cnr_id": "comfy-core"
+   }
+  },
+  {
+   "id": 11,
+   "type": "CLIPTextEncode",
+   "pos": [
+    820,
+    40
+   ],
+   "size": [
+    420,
+    300
+   ],
+   "flags": {},
+   "order": 10,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 8
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      9,
+      10
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPTextEncode",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "Transform this 3D render into a genuine photograph, as if shot on a full-frame camera with a 35mm lens. Keep the exact same camera angle, framing, composition and geometry: every post, beam, slat, rung, climbing hold, rope net, chain, swing, slide and roof edge stays in the same place with the same proportions and the same count. Do not add, remove or move any objects. Improve only realism: real pine wood grain and knots on the natural timber, matte black-stained wood with subtle texture and slight wear, natural sunlight with soft realistic shadows and bounce light, true-to-life fabric on the curtains and canopy, natural grass with variation, realistic plants and trees, gentle depth of field, fine photographic detail. No CGI look, no plastic surfaces."
+   ],
+   "title": "Промпт (что улучшить, что НЕ трогать)"
+  },
+  {
+   "id": 12,
+   "type": "ConditioningZeroOut",
+   "pos": [
+    820,
+    380
+   ],
+   "size": [
+    240,
+    26
+   ],
+   "flags": {},
+   "order": 11,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "conditioning",
+     "type": "CONDITIONING",
+     "link": 9
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      12
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ConditioningZeroOut",
+    "cnr_id": "comfy-core"
+   }
+  },
+  {
+   "id": 13,
+   "type": "ReferenceLatent",
+   "pos": [
+    1280,
+    40
+   ],
+   "size": [
+    220,
+    46
+   ],
+   "flags": {},
+   "order": 12,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "conditioning",
+     "type": "CONDITIONING",
+     "link": 10
+    },
+    {
+     "name": "latent",
+     "type": "LATENT",
+     "link": 11
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      14
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ReferenceLatent",
+    "cnr_id": "comfy-core"
+   },
+   "title": "Ref image 1 → positive"
+  },
+  {
+   "id": 14,
+   "type": "ReferenceLatent",
+   "pos": [
+    1280,
+    380
+   ],
+   "size": [
+    220,
+    46
+   ],
+   "flags": {},
+   "order": 13,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "conditioning",
+     "type": "CONDITIONING",
+     "link": 12
+    },
+    {
+     "name": "latent",
+     "type": "LATENT",
+     "link": 13
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      16
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ReferenceLatent",
+    "cnr_id": "comfy-core"
+   },
+   "title": "Ref image 1 → negative"
+  },
+  {
+   "id": 15,
+   "type": "ReferenceLatent",
+   "pos": [
+    1280,
+    560
+   ],
+   "size": [
+    220,
+    46
+   ],
+   "flags": {},
+   "order": 14,
+   "mode": 4,
+   "inputs": [
+    {
+     "name": "conditioning",
+     "type": "CONDITIONING",
+     "link": 14
+    },
+    {
+     "name": "latent",
+     "type": "LATENT",
+     "link": 15
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      23
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ReferenceLatent",
+    "cnr_id": "comfy-core"
+   },
+   "title": "Ref image 2 → positive"
+  },
+  {
+   "id": 16,
+   "type": "ReferenceLatent",
+   "pos": [
+    1280,
+    680
+   ],
+   "size": [
+    220,
+    46
+   ],
+   "flags": {},
+   "order": 15,
+   "mode": 4,
+   "inputs": [
+    {
+     "name": "conditioning",
+     "type": "CONDITIONING",
+     "link": 16
+    },
+    {
+     "name": "latent",
+     "type": "LATENT",
+     "link": 17
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      24
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ReferenceLatent",
+    "cnr_id": "comfy-core"
+   },
+   "title": "Ref image 2 → negative"
+  },
+  {
+   "id": 17,
+   "type": "EmptyFlux2LatentImage",
+   "pos": [
+    1560,
+    40
+   ],
+   "size": [
+    270,
+    106
+   ],
+   "flags": {},
+   "order": 16,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": 18
+    },
+    {
+     "name": "height",
+     "type": "INT",
+     "widget": {
+      "name": "height"
+     },
+     "link": 19
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      29
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "EmptyFlux2LatentImage",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    1024,
+    1024,
+    1
+   ]
+  },
+  {
+   "id": 18,
+   "type": "Flux2Scheduler",
+   "pos": [
+    1560,
+    190
+   ],
+   "size": [
+    270,
+    106
+   ],
+   "flags": {},
+   "order": 17,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": 20
+    },
+    {
+     "name": "height",
+     "type": "INT",
+     "widget": {
+      "name": "height"
+     },
+     "link": 21
+    }
+   ],
+   "outputs": [
+    {
+     "name": "SIGMAS",
+     "type": "SIGMAS",
+     "links": [
+      28
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "Flux2Scheduler",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    4,
+    1024,
+    1024
+   ],
+   "title": "Flux2Scheduler (steps=4 для distilled)"
+  },
+  {
+   "id": 19,
+   "type": "KSamplerSelect",
+   "pos": [
+    1560,
+    340
+   ],
+   "size": [
+    270,
+    58
+   ],
+   "flags": {},
+   "order": 18,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "SAMPLER",
+     "type": "SAMPLER",
+     "links": [
+      27
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSamplerSelect",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "euler"
+   ]
+  },
+  {
+   "id": 21,
+   "type": "RandomNoise",
+   "pos": [
+    1560,
+    440
+   ],
+   "size": [
+    270,
+    82
+   ],
+   "flags": {},
+   "order": 19,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "NOISE",
+     "type": "NOISE",
+     "links": [
+      25
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "RandomNoise",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    20260927,
+    "randomize"
+   ]
+  },
+  {
+   "id": 22,
+   "type": "CFGGuider",
+   "pos": [
+    1560,
+    560
+   ],
+   "size": [
+    270,
+    98
+   ],
+   "flags": {},
+   "order": 20,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 22
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 23
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 24
+    }
+   ],
+   "outputs": [
+    {
+     "name": "GUIDER",
+     "type": "GUIDER",
+     "links": [
+      26
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CFGGuider",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    1
+   ]
+  },
+  {
+   "id": 23,
+   "type": "SamplerCustomAdvanced",
+   "pos": [
+    1880,
+    40
+   ],
+   "size": [
+    300,
+    330
+   ],
+   "flags": {},
+   "order": 21,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "noise",
+     "type": "NOISE",
+     "link": 25
+    },
+    {
+     "name": "guider",
+     "type": "GUIDER",
+     "link": 26
+    },
+    {
+     "name": "sampler",
+     "type": "SAMPLER",
+     "link": 27
+    },
+    {
+     "name": "sigmas",
+     "type": "SIGMAS",
+     "link": 28
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 29
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "LATENT",
+     "links": [
+      30
+     ],
+     "slot_index": 0
+    },
+    {
+     "name": "denoised_output",
+     "type": "LATENT",
+     "links": null
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "SamplerCustomAdvanced",
+    "cnr_id": "comfy-core"
+   }
+  },
+  {
+   "id": 24,
+   "type": "VAEDecode",
+   "pos": [
+    1880,
+    420
+   ],
+   "size": [
+    220,
+    46
+   ],
+   "flags": {},
+   "order": 22,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 30
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 31
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      32,
+      34
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode",
+    "cnr_id": "comfy-core"
+   }
+  },
+  {
+   "id": 25,
+   "type": "SaveImage",
+   "pos": [
+    2260,
+    40
+   ],
+   "size": [
+    420,
+    460
+   ],
+   "flags": {},
+   "order": 23,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 32
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "PAVLOV/01_edit"
+   ],
+   "title": "Результат редактирования (~1 MP)"
+  },
+  {
+   "id": 26,
+   "type": "UpscaleModelLoader",
+   "pos": [
+    2260,
+    560
+   ],
+   "size": [
+    320,
+    58
+   ],
+   "flags": {},
+   "order": 24,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "UPSCALE_MODEL",
+     "type": "UPSCALE_MODEL",
+     "links": [
+      33
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UpscaleModelLoader",
+    "cnr_id": "comfy-core",
+    "models": [
+     {
+      "name": "RealESRGAN_x4plus.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Real-ESRGAN_repackaged/resolve/main/RealESRGAN_x4plus.safetensors",
+      "directory": "upscale_models"
+     }
+    ]
+   },
+   "widgets_values": [
+    "RealESRGAN_x4plus.safetensors"
+   ]
+  },
+  {
+   "id": 27,
+   "type": "ImageUpscaleWithModel",
+   "pos": [
+    2260,
+    660
+   ],
+   "size": [
+    320,
+    46
+   ],
+   "flags": {},
+   "order": 25,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "upscale_model",
+     "type": "UPSCALE_MODEL",
+     "link": 33
+    },
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 34
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      35
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageUpscaleWithModel",
+    "cnr_id": "comfy-core"
+   }
+  },
+  {
+   "id": 28,
+   "type": "SaveImage",
+   "pos": [
+    2720,
+    40
+   ],
+   "size": [
+    460,
+    500
+   ],
+   "flags": {},
+   "order": 26,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 35
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "PAVLOV/02_upscaled_x4"
+   ],
+   "title": "Финал x4 (Real-ESRGAN)"
+  },
+  {
+   "id": 30,
+   "type": "MarkdownNote",
+   "pos": [
+    -560,
+    40
+   ],
+   "size": [
+    520,
+    820
+   ],
+   "flags": {},
+   "order": 27,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "MarkdownNote",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "# PAVLOV — render → photo (FLUX.2 Klein 4B, локально)\n\n**Что делает:** берёт рендер (image 1), перерисовывает в фото с сохранением ракурса и геометрии, затем честный апскейл x4 без «додумывания».\n\n## Модели (≈12–13 ГБ, один раз)\nПри открытии ComfyUI сам предложит скачать недостающие. Если нет — вручную:\n\n- **diffusion_models** → [flux-2-klein-4b-fp8.safetensors](https://huggingface.co/black-forest-labs/FLUX.2-klein-4b-fp8/resolve/main/flux-2-klein-4b-fp8.safetensors)\n- **text_encoders** → [qwen_3_4b.safetensors](https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/text_encoders/qwen_3_4b.safetensors)\n- **vae** → [flux2-vae.safetensors](https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/vae/flux2-vae.safetensors)\n- **upscale_models** → [RealESRGAN_x4plus.safetensors](https://huggingface.co/Comfy-Org/Real-ESRGAN_repackaged/resolve/main/RealESRGAN_x4plus.safetensors)\n\n```\nComfyUI/models/\n├── diffusion_models/flux-2-klein-4b-fp8.safetensors\n├── text_encoders/qwen_3_4b.safetensors\n├── vae/flux2-vae.safetensors\n└── upscale_models/RealESRGAN_x4plus.safetensors\n```\n\n**Mac (Apple Silicon):** fp8 там не работает — бери bf16-версию Klein 4B и выбери её в UNETLoader.\n\n**Лицензия:** Klein **4B** — Apache 2.0, коммерция ок. Klein 9B — non-commercial, для рекламы PAVLOV не бери.\n"
+   ],
+   "title": "Setup"
+  },
+  {
+   "id": 31,
+   "type": "MarkdownNote",
+   "pos": [
+    -560,
+    900
+   ],
+   "size": [
+    520,
+    420
+   ],
+   "flags": {},
+   "order": 28,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "MarkdownNote",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "# Вход из 3D-модели (вместо рендера)\n\n1. Экспортируй из 3ds Max в **GLB/glTF** или **FBX** (материалы Corona/V-Ray не переедут — достаточно простых цветов или clay).\n2. Двойной клик по канвасу → найди **Load 3D** → загрузи файл (он ляжет в `ComfyUI/input/3d/`).\n3. Выставь камеру прямо в окне ноды, задай width/height.\n4. Протяни выход **image** из Load 3D во вход **image** ноды «Рабочее разрешение» — вместо LoadImage.\n\nСовет: включи референс image 2 (свой лучший рендер) — так материалы и свет будут стабильнее между ракурсами.\n"
+   ],
+   "title": "3D input"
+  },
+  {
+   "id": 32,
+   "type": "MarkdownNote",
+   "pos": [
+    2720,
+    800
+   ],
+   "size": [
+    460,
+    520
+   ],
+   "flags": {},
+   "order": 29,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "MarkdownNote",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "# Как тестировать\n\n- **Мегапиксели** (нода «Рабочее разрешение»): 1.0 — безопасно для ноутбука. Если памяти хватает, попробуй 1.5–2.0: больше деталей до апскейла.\n- **Seed** стоит на randomize — каждый запуск новый вариант. Нашёл удачный — переключи на fixed.\n- **Проверяй геометрию!** Сравнивай с исходником: рейки, сетки, перекладины, цепи — первое, что модель может «поплыть».\n- Если что-то сдвигается — усиливай в промпте запреты по конкретному элементу.\n\n## Референс image 2 (выключен)\nВыдели 5 серых нод (LoadImage #2, Scale, VAEEncode, 2× Ref image 2) → **Ctrl+B**.\nДопиши в промпт: *use the materials, colors and lighting mood from image 2*.\n"
+   ],
+   "title": "Tips"
+  }
+ ],
+ "links": [
+  [
+   1,
+   1,
+   0,
+   6,
+   0,
+   "IMAGE"
+  ],
+  [
+   2,
+   6,
+   0,
+   7,
+   0,
+   "IMAGE"
+  ],
+  [
+   3,
+   6,
+   0,
+   8,
+   0,
+   "IMAGE"
+  ],
+  [
+   4,
+   5,
+   0,
+   8,
+   1,
+   "VAE"
+  ],
+  [
+   5,
+   2,
+   0,
+   9,
+   0,
+   "IMAGE"
+  ],
+  [
+   6,
+   9,
+   0,
+   10,
+   0,
+   "IMAGE"
+  ],
+  [
+   7,
+   5,
+   0,
+   10,
+   1,
+   "VAE"
+  ],
+  [
+   8,
+   4,
+   0,
+   11,
+   0,
+   "CLIP"
+  ],
+  [
+   9,
+   11,
+   0,
+   12,
+   0,
+   "CONDITIONING"
+  ],
+  [
+   10,
+   11,
+   0,
+   13,
+   0,
+   "CONDITIONING"
+  ],
+  [
+   11,
+   8,
+   0,
+   13,
+   1,
+   "LATENT"
+  ],
+  [
+   12,
+   12,
+   0,
+   14,
+   0,
+   "CONDITIONING"
+  ],
+  [
+   13,
+   8,
+   0,
+   14,
+   1,
+   "LATENT"
+  ],
+  [
+   14,
+   13,
+   0,
+   15,
+   0,
+   "CONDITIONING"
+  ],
+  [
+   15,
+   10,
+   0,
+   15,
+   1,
+   "LATENT"
+  ],
+  [
+   16,
+   14,
+   0,
+   16,
+   0,
+   "CONDITIONING"
+  ],
+  [
+   17,
+   10,
+   0,
+   16,
+   1,
+   "LATENT"
+  ],
+  [
+   18,
+   7,
+   0,
+   17,
+   0,
+   "INT"
+  ],
+  [
+   19,
+   7,
+   1,
+   17,
+   1,
+   "INT"
+  ],
+  [
+   20,
+   7,
+   0,
+   18,
+   0,
+   "INT"
+  ],
+  [
+   21,
+   7,
+   1,
+   18,
+   1,
+   "INT"
+  ],
+  [
+   22,
+   3,
+   0,
+   22,
+   0,
+   "MODEL"
+  ],
+  [
+   23,
+   15,
+   0,
+   22,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   24,
+   16,
+   0,
+   22,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   25,
+   21,
+   0,
+   23,
+   0,
+   "NOISE"
+  ],
+  [
+   26,
+   22,
+   0,
+   23,
+   1,
+   "GUIDER"
+  ],
+  [
+   27,
+   19,
+   0,
+   23,
+   2,
+   "SAMPLER"
+  ],
+  [
+   28,
+   18,
+   0,
+   23,
+   3,
+   "SIGMAS"
+  ],
+  [
+   29,
+   17,
+   0,
+   23,
+   4,
+   "LATENT"
+  ],
+  [
+   30,
+   23,
+   0,
+   24,
+   0,
+   "LATENT"
+  ],
+  [
+   31,
+   5,
+   0,
+   24,
+   1,
+   "VAE"
+  ],
+  [
+   32,
+   24,
+   0,
+   25,
+   0,
+   "IMAGE"
+  ],
+  [
+   33,
+   26,
+   0,
+   27,
+   0,
+   "UPSCALE_MODEL"
+  ],
+  [
+   34,
+   24,
+   0,
+   27,
+   1,
+   "IMAGE"
+  ],
+  [
+   35,
+   27,
+   0,
+   28,
+   0,
+   "IMAGE"
+  ]
+ ],
+ "groups": [
+  {
+   "id": 1,
+   "title": "① Вход: рендер (image 1)",
+   "bounding": [
+    -20,
+    -40,
+    780,
+    520
+   ],
+   "color": "#3f789e",
+   "flags": {}
+  },
+  {
+   "id": 2,
+   "title": "② Референс image 2 — выключен (выдели ноды → Ctrl+B)",
+   "bounding": [
+    -20,
+    500,
+    780,
+    500
+   ],
+   "color": "#444444",
+   "flags": {}
+  },
+  {
+   "id": 3,
+   "title": "③ Модели",
+   "bounding": [
+    400,
+    1000,
+    380,
+    400
+   ],
+   "color": "#8A8",
+   "flags": {}
+  },
+  {
+   "id": 4,
+   "title": "④ Промпт + референсы",
+   "bounding": [
+    800,
+    -40,
+    720,
+    800
+   ],
+   "color": "#b58b2a",
+   "flags": {}
+  },
+  {
+   "id": 5,
+   "title": "⑤ Семплинг (4 шага, cfg 1)",
+   "bounding": [
+    1540,
+    -40,
+    660,
+    720
+   ],
+   "color": "#a1309b",
+   "flags": {}
+  },
+  {
+   "id": 6,
+   "title": "⑥ Выход + апскейл x4",
+   "bounding": [
+    2240,
+    -40,
+    960,
+    780
+   ],
+   "color": "#2a8b5a",
+   "flags": {}
+  }
+ ],
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.55,
+   "offset": [
+    620,
+    120
+   ]
+  }
+ },
+ "version": 0.4
+}

@@ -1,0 +1,341 @@
+CAMERA 06 — STRICT SOURCE-RENDER MATCH
+INTERIOR / LOWER LEVEL VIEW
+ABSOLUTE CONSTRUCTION LOCK
+
+THIS IS NOT A NEW CAMERA DESIGN.
+
+The supplied Camera 06 source render is the ABSOLUTE VISUAL MASTER for this image.
+
+Reconstruct the supplied Camera 06 source render as a photorealistic architectural photograph / visualization of the SAME EXISTING 3D SCENE.
+
+The task is NOT to redesign, remodel, reinterpret or improve the structure.
+
+The ONLY permitted transformation is:
+
+EXISTING 3D SCENE
+→ photorealistic materials
+→ realistic lighting
+→ realistic environment / background
+→ realistic shadows and reflections
+→ photographic image quality.
+
+NOTHING CONSTRUCTIVE MAY CHANGE.
+
+==================================================
+CAMERA 06 — ABSOLUTE CAMERA LOCK
+==================================================
+
+3ds Max Physical Camera
+
+Focal length: 22.000 mm
+
+Target Distance: 36.918 cm
+
+The supplied Camera 06 source render is the absolute authority for the camera.
+
+Preserve exactly:
+
+- camera position;
+- camera height;
+- camera orientation;
+- viewing direction;
+- 22 mm perspective;
+- field of view;
+- framing;
+- crop;
+- relative size of all objects;
+- perspective relationships;
+- amount of visible floor;
+- amount of visible ceiling / overhead structure;
+- position of every major object in the frame.
+
+DO NOT choose a more attractive camera angle.
+
+DO NOT move the camera backward.
+
+DO NOT move the camera forward.
+
+DO NOT rotate the camera.
+
+DO NOT change the focal length.
+
+DO NOT straighten the perspective.
+
+DO NOT convert the image into an architectural wide-angle photograph with a different viewpoint.
+
+The final image must be recognizably the SAME Camera 06 frame.
+
+==================================================
+ABSOLUTE CONSTRUCTION LOCK
+==================================================
+
+DO NOT MODIFY THE 3D MODEL.
+
+Preserve exactly:
+
+- all structural posts;
+- all beams;
+- all walls;
+- all partitions;
+- all roof-support elements;
+- all floorboards;
+- all railings;
+- all openings;
+- stairs;
+- ladders;
+- climbing elements;
+- swings;
+- chains;
+- sofa;
+- coffee table;
+- curtains;
+- every visible connection between structural elements.
+
+DO NOT add walls.
+
+DO NOT remove walls.
+
+DO NOT move walls.
+
+DO NOT change openings.
+
+DO NOT enlarge openings.
+
+DO NOT close openings.
+
+DO NOT add windows.
+
+DO NOT add doors.
+
+DO NOT add glazing.
+
+DO NOT add architectural panels.
+
+DO NOT add polycarbonate.
+
+DO NOT add glass walls.
+
+DO NOT add screens.
+
+DO NOT add decorative construction.
+
+DO NOT change the roof or roof-support geometry.
+
+If an element looks unusual in the source render, PRESERVE IT.
+
+If an area looks open in the source render, KEEP IT OPEN.
+
+If an area looks enclosed, KEEP IT ENCLOSED.
+
+Do not "fix" the architecture.
+
+Do not make the structure more logical.
+
+Do not make the structure more modern.
+
+==================================================
+INTERIOR COMPOSITION — CRITICAL
+==================================================
+
+The exact Camera 06 source composition must remain intact.
+
+Preserve the spatial relationship between:
+
+- the covered lounge area;
+- the sofa;
+- the wooden coffee table;
+- the swing;
+- the round nest swing;
+- the climbing wall;
+- the ladder;
+- the overhead monkey bars / timber elements;
+- structural posts and beams;
+- curtains;
+- floor.
+
+DO NOT rearrange furniture.
+
+DO NOT change sofa orientation.
+
+DO NOT change sofa dimensions.
+
+DO NOT move the coffee table.
+
+DO NOT move either swing.
+
+DO NOT change the hanging points of the swings.
+
+DO NOT move the climbing wall.
+
+DO NOT change the stairs or ladder.
+
+==================================================
+PHYSICAL SCALE
+==================================================
+
+Use the Technical Master Reference for physical scale.
+
+Playhouse footprint:
+approximately 467 × 585 cm.
+
+Maximum overall height:
+495 cm.
+
+Lower / covered section:
+220 cm.
+
+Preserve the real physical proportions.
+
+Do not make the interior larger or smaller.
+
+Do not increase ceiling height.
+
+Do not widen the covered area.
+
+==================================================
+ENVIRONMENT / BACKGROUND
+==================================================
+
+The white / empty areas visible through the openings in the source render are NOT permission to redesign the architecture.
+
+Keep every opening exactly as shown.
+
+The background beyond the openings may be transformed into a realistic residential garden / property environment.
+
+The environment belongs to the SAME fixed residential property used for the other cameras.
+
+Use:
+- contemporary Polish residential surroundings;
+- realistic garden;
+- lawn;
+- planting;
+- neighboring house elements where physically visible;
+- natural atmospheric depth.
+
+Do not allow the background to alter the structure.
+
+Do not add landscape elements that would appear to be physically inside the playhouse.
+
+==================================================
+LIGHTING
+==================================================
+
+Work with LIGHT, not geometry.
+
+Use warm golden-hour architectural photography.
+
+Allowed:
+- warm natural sunlight;
+- realistic indirect light;
+- soft natural shadows;
+- realistic contact shadows;
+- warm reflected light;
+- realistic exposure;
+- physically plausible highlights;
+- subtle atmospheric light.
+
+The interior should remain readable.
+
+Do not make the interior artificially dark.
+
+Do not use studio lighting.
+
+Do not introduce artificial architectural lights.
+
+Do not create dramatic cinematic rim lighting.
+
+==================================================
+MATERIALS
+==================================================
+
+Work with MATERIAL APPEARANCE only.
+
+Preserve all existing material assignments.
+
+Improve only:
+- wood grain;
+- wood roughness;
+- natural imperfections;
+- fabric texture;
+- metal texture;
+- floor texture;
+- realistic reflections;
+- realistic surface response.
+
+Wood must look like real stained / painted timber.
+
+Black timber must remain dark.
+
+Floorboards must remain dark where shown in the source.
+
+Curtains must remain the same curtains.
+
+Sofa must remain the same sofa.
+
+Slide:
+DARK GREY RAL 7016 wherever visible.
+
+==================================================
+PHOTOREALISM
+==================================================
+
+The final result should look like a professional architectural photograph of the existing playhouse interior.
+
+Not a redesign.
+
+Not a new interior.
+
+Not an AI-generated concept.
+
+Not a CGI reinterpretation.
+
+Use realistic:
+- exposure;
+- depth;
+- material response;
+- shadows;
+- reflections;
+- fabric;
+- wood;
+- atmospheric integration.
+
+Avoid:
+- excessive depth of field;
+- distorted wide-angle geometry;
+- fisheye appearance;
+- plastic materials;
+- oversaturation;
+- excessive sharpening;
+- fake HDR;
+- painterly rendering.
+
+==================================================
+FINAL RULE
+==================================================
+
+SOURCE RENDER = CAMERA + GEOMETRY + COMPOSITION TRUTH.
+
+Technical Master Reference = SCALE + PROJECT CONTINUITY.
+
+AI is allowed to improve ONLY:
+
+LIGHT.
+MATERIALS.
+BACKGROUND.
+TEXTURES.
+SHADOWS.
+PHOTOREALISM.
+
+AI is NOT allowed to change:
+
+CAMERA.
+PERSPECTIVE.
+GEOMETRY.
+CONSTRUCTION.
+OBJECT POSITIONS.
+PROPORTIONS.
+OPENINGS.
+FURNITURE.
+PLAY EQUIPMENT.
+
+The final image must be the SAME Camera 06 view of the SAME existing structure, transformed only from a 3D render into a photorealistic architectural photograph.
