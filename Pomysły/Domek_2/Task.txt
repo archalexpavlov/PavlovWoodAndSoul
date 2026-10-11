@@ -1,0 +1,240 @@
+Да. Здесь проблема не в формулировке «сохрани композицию» — для генератора это слишком мягкое требование. Нужно превратить это в жёсткий режим реконструкции исходного изображения, где генератору вообще запрещено принимать дизайнерские решения.
+Я бы зафиксировал мастер-промпт именно так:
+MASTER PROMPT — ABSOLUTE GEOMETRY / COMPOSITION / FORMAT LOCK
+TASK:
+Transform the provided architectural 3D render into a photorealistic architectural visualization while preserving the source image with absolute geometric, compositional and dimensional accuracy.
+The uploaded image is the SOLE AND ABSOLUTELY AUTHORITATIVE REFERENCE for the architecture, geometry, object placement, proportions, camera composition and all visible elements.
+This is NOT a redesign, reinterpretation, restyling or improvement of the architecture.
+The task is strictly:
+KEEP THE OBJECT EXACTLY AS IT IS → REMOVE/REPLACE ONLY THE WHITE BACKGROUND → CREATE REALISTIC LIGHTING, MATERIALS AND ENVIRONMENT.
+1. ABSOLUTE CONSTRUCTION LOCK
+DO NOT CHANGE THE ARCHITECTURE IN ANY WAY.
+Preserve exactly:
+- overall dimensions and proportions;
+- exact building footprint;
+- exact geometry of all structures;
+- exact position of every beam;
+- exact position of every column;
+- exact position of every wall;
+- exact position of every floor/deck element;
+- exact roof geometry;
+- exact openings;
+- exact stairs;
+- exact playground elements;
+- exact climbing elements;
+- exact ropes and nets;
+- exact swings;
+- exact furniture;
+- exact curtains;
+- exact decorative elements already present in the source;
+- exact relationship between all objects;
+- exact distances and spacing;
+- exact height relationships;
+- exact orientation of every element.
+Every object visible in the source image must remain in exactly the same location and with exactly the same geometry.
+Do not add.
+Do not remove.
+Do not move.
+Do not resize.
+Do not rotate.
+Do not redesign.
+Do not simplify.
+Do not reinterpret.
+Do not "improve" the design.
+2. ZERO INVENTION RULE
+The generator is strictly prohibited from inventing any new architectural or decorative elements.
+Do NOT add:
+- flower pots;
+- planters;
+- plants inside the structure;
+- additional furniture;
+- chairs;
+- tables;
+- benches;
+- pillows;
+- blankets;
+- toys;
+- decorations;
+- lanterns;
+- lighting fixtures;
+- lamps;
+- sculptures;
+- ornaments;
+- accessories;
+- railings;
+- fences;
+- walls;
+- doors;
+- windows;
+- partitions;
+- structural elements;
+- additional playground equipment;
+- additional vegetation attached to the structure;
+- any other object that does not already exist in the source image.
+NO CREATIVE ADDITIONS WHATSOEVER.
+In particular:
+DO NOT ADD ANYTHING INSIDE THE STRUCTURE.
+The interior and all semi-enclosed areas must remain exactly as shown in the source image.
+The model must not furnish, decorate, populate or embellish empty areas.
+Empty space in the source image must remain empty.
+3. OBJECT COUNT LOCK
+The number of objects must remain identical to the source.
+If the source contains one object, output one object.
+If the source contains three objects, output three objects.
+Never duplicate any object.
+Never remove any object.
+Never create a similar replacement object.
+Object count, placement and geometry have priority over photorealism.
+4. CAMERA / COMPOSITION LOCK
+This is a strict image-to-image reconstruction.
+The camera must remain exactly the same as in the source.
+Preserve:
+- camera position;
+- camera height;
+- camera angle;
+- camera rotation;
+- perspective;
+- field of view;
+- focal length;
+- framing;
+- crop;
+- object scale within frame;
+- horizon position;
+- visible sides of the structure;
+- exact spatial relationships.
+DO NOT CHANGE THE CAMERA.
+Do not zoom in.
+Do not zoom out.
+Do not crop.
+Do not reframe.
+Do not center the object differently.
+Do not create a more "beautiful" composition.
+Do not correct perspective.
+Do not change the viewing angle.
+5. ABSOLUTE OUTPUT FORMAT LOCK
+THE OUTPUT MUST HAVE EXACTLY THE SAME ORIENTATION, ASPECT RATIO AND CANVAS FORMAT AS THE INPUT IMAGE.
+This requirement has absolute priority.
+If the input is horizontal → output MUST be horizontal.
+If the input is vertical → output MUST be vertical.
+If the input is square → output MUST be square.
+NEVER CHANGE ORIENTATION.
+NEVER CONVERT LANDSCAPE TO PORTRAIT.
+NEVER CONVERT PORTRAIT TO LANDSCAPE.
+NEVER CROP THE SOURCE IMAGE TO FIT ANOTHER FORMAT.
+NEVER EXTEND or recompose the canvas in a way that changes the original framing.
+The output must preserve the exact original aspect ratio and composition of the source image.
+The entire source frame must remain visible.
+6. PIXEL / RESOLUTION PRIORITY
+Preserve the original image dimensions and aspect ratio whenever technically possible.
+Do not arbitrarily generate a different resolution or different canvas proportions.
+Resolution must never be changed at the expense of composition.
+If the exact pixel dimensions cannot be preserved by the generation system, then:
+PRESERVE THE EXACT ASPECT RATIO AND FULL FRAME FIRST.
+Never sacrifice framing or orientation to achieve another resolution.
+7. MATERIAL REALISM
+Keep the existing material palette and architectural material logic.
+The source structure uses:
+- dark graphite / anthracite structural timber;
+- dark grey graphite decking;
+- natural larch timber elements;
+- natural warm wood details;
+- black/dark metal elements;
+- existing rope and net elements.
+Do not redesign materials.
+Do not change the color scheme.
+Do not introduce new materials.
+The task is to transform the existing materials from a 3D-render appearance into physically plausible, photorealistic architectural materials.
+Preserve:
+- wood grain direction;
+- board spacing;
+- timber dimensions;
+- structural profiles;
+- graphite tone;
+- natural wood tone;
+- texture scale;
+- material boundaries.
+8. LIGHTING
+Replace the artificial/flat render appearance with realistic natural daylight.
+Use:
+- soft natural daylight;
+- physically plausible shadows;
+- realistic ambient occlusion;
+- subtle indirect illumination;
+- natural contact shadows;
+- realistic reflections;
+- physically plausible material response.
+Lighting must reveal the existing geometry without changing it.
+Do not use dramatic cinematic lighting.
+Do not create artificial spotlights.
+Do not add light sources that do not exist in the source.
+The lighting should resemble a high-end architectural visualization photographed in a real Polish residential garden.
+9. ENVIRONMENT / BACKGROUND
+The existing white background may be replaced with a realistic outdoor environment.
+The structure should be placed in a:
+modern private Polish residential garden / suburban detached-house setting.
+Environment should be:
+- clean;
+- contemporary;
+- understated;
+- realistic;
+- professionally landscaped;
+- quiet;
+- residential;
+- architecturally coherent.
+Use a neatly maintained, freshly cut lawn wherever lawn is visible.
+The grass must be:
+- short;
+- dense;
+- clean;
+- evenly maintained;
+- realistic;
+- not overgrown;
+- not wild;
+- not meadow-like.
+The lawn may naturally approach and partially surround the structure where appropriate, but must never cover, penetrate or alter the architecture.
+10. BACKGROUND ONLY = THE ONLY AREA ALLOWED TO BE CREATED
+The generator has creative freedom ONLY in the external background/environment outside the architectural object, and even there it should remain restrained.
+Background elements may include only subtle elements appropriate to a modern Polish residential garden, such as:
+- lawn;
+- distant greenery;
+- subtle garden vegetation;
+- restrained trees/shrubs;
+- neutral neighboring residential context;
+- soft atmospheric depth.
+However:
+Background elements must never overlap, penetrate or alter the architectural object.
+Do not introduce decorative objects near the structure simply to make the image look prettier.
+11. ARCHITECTURAL PRIORITY
+When there is any conflict between:
+photorealism vs. geometry
+geometry wins.
+When there is a conflict between:
+beautification vs. source accuracy
+source accuracy wins.
+When there is a conflict between:
+creative interpretation vs. source reference
+source reference wins.
+When there is a conflict between:
+resolution vs. original aspect ratio
+original aspect ratio wins.
+When there is a conflict between:
+new environmental detail vs. architectural integrity
+architectural integrity wins.
+12. NEGATIVE PROMPT / FORBIDDEN BEHAVIOR
+ABSOLUTELY FORBIDDEN:
+changing camera angle, changing camera position, changing focal length, changing perspective, changing framing, changing crop, changing aspect ratio, changing orientation, portrait conversion, landscape conversion, resizing the building, changing proportions, changing geometry, moving objects, adding objects, removing objects, duplicating objects, redesigning architecture, adding furniture, adding planters, adding flower pots, adding decorations, adding toys, adding lighting fixtures, adding plants inside the structure, adding playground equipment, adding architectural elements, adding doors, adding windows, adding walls, adding railings, adding fences, changing structural members, changing roof geometry, changing deck geometry, changing material layout, changing colors, inventing details, filling empty spaces, decorating empty spaces, improving the design, creative reinterpretation, architectural redesign, composition change, crop, zoom, reframing, different image orientation, different aspect ratio.
+FINAL COMMAND
+TRACE THE SOURCE. DO NOT REDESIGN IT.
+The uploaded image is the master.
+Everything architectural must remain exactly where it is.
+Everything inside the structure must remain exactly as it is.
+The number of objects must remain exactly the same.
+The camera and composition must remain exactly the same.
+The orientation and aspect ratio must remain exactly the same.
+Do not add a single new object.
+Do not remove a single existing object.
+Do not invent anything inside the structure.
+Only transform the visual quality from 3D render → photorealistic architectural visualization and replace the white background with a restrained, realistic, neatly landscaped Polish residential garden.
+SOURCE ACCURACY HAS ABSOLUTE PRIORITY OVER CREATIVITY.
+Я бы ещё добавил одну очень важную фразу именно для генератора в самом первом и самом последнем абзаце:
+THIS IS A PRESERVATION TASK, NOT A GENERATION TASK.
