@@ -75,6 +75,16 @@ Site/              ПОДМОДУЛЬ, репозиторий archalexpavlov/Pav
 
 ## Инфраструктура — собрана, не переисследовать
 
+- **Имя продукта — Ritfab**, решено 1 ноября 2026. Отбор и проверки — `docs/naming.md`
+- **Домены Ritfab:** `ritfab.com` основной (куплен в Cloudflare Registrar),
+  `ritfab.eu` и `ritfab.de` (куплены в Namecheap) отдают 301 на `.com`.
+  NS всех трёх — `archer.ns.cloudflare.com`, `ollie.ns.cloudflare.com`.
+  Редирект сделан правилом Cloudflare Redirect Rules, не переадресацией регистратора:
+  у Namecheap нет сертификата на эти домены, `https` ломался бы.
+  В зонах `.eu` и `.de` стоят две `A` на `192.0.2.1` с проксированием (адрес фиктивный,
+  трафик перехватывает правило), плюс `v=spf1 -all`, `v=DMARC1; p=reject;` и нулевой `MX`
+  с точкой — домены почту не возят, подделать отправителя нельзя
+- `ritfab.com` пока пустая зона без A-записи: редиректы ведут туда, но сайта там ещё нет
 - **Домен `alexpavlov.pl`**, DNS у регистратора aftermarket, NS не переезжали
 - **Почта `kontakt@alexpavlov.pl`** — ящик у регистратора, Sieve шлёт копию в Gmail.
   Отправка через `smtp.aftermarket.pl:587`
